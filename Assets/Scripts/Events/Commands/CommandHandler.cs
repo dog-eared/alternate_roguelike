@@ -5,44 +5,35 @@ using UnityEngine.UI; //remove later
 
 public class CommandHandler : MonoBehaviour {
 
-	public GameObject mover;
-	public GameObject mover2;
+	public static CommandHandler Instance {get; private set;}
+
+	public CreatureCombatData mover;
+	public CreatureCombatData mover2;
 	public Text debugOutput;
 
-	private Queue<Command> commands = new Queue<Command>();
+	private static Queue<Command> commands = new Queue<Command>();
 	private IEnumerator callActions;
 
-	void Update () {
-		if (Input.GetKeyDown("d")) {
-			commands.Enqueue(new MoveCommand(mover, new Vector2Int(1, 0)));
-			debugOutput.text += "\n Moved mover1 r";
+	void Awake() {
+		if (Instance == null) {
+			Instance = this;
+		} else {
+			Debug.Log("ERROR: There should only be one CommandHandler");
+			Destroy(this);
+		}
+	}
+
+	public bool Execute() {
+		if (commands.Count > 0 && callActions == null) {
+			callActions = CallActions();
+			StartCoroutine(callActions);
+			return true;
 		}
 
-		if (Input.GetKeyDown("a")) {
-			commands.Enqueue(new MoveCommand(mover, new Vector2Int(-1, 0)));
-			debugOutput.text += "\n Moved mover1 le";
-		}
-
-		if (Input.GetKeyDown("e")) {
-			commands.Enqueue(new MoveCommand(mover2, new Vector2Int(1, 0)));
-			debugOutput.text += "\n Moved mover2 r";
-		}
-
-		if (Input.GetKeyDown("q")) {
-			commands.Enqueue(new MoveCommand(mover2, new Vector2Int(-1, 0)));
-			debugOutput.text += "\n Moved mover2 le";
-		}
-
-		if (Input.GetKeyDown("s")) {
-			if (commands.Count > 0 && callActions == null) {
-				callActions = CallActions();
-				StartCoroutine(callActions);
-			}
-		}
-
-		if (Input.GetKeyDown("p")) {
-			debugOutput.text = "";
-		}
+		Debug.Log("CommandHandler was unable to execute: "
+					+ commands.Count + " commands and callActions exists = "
+					+ (callActions == null));
+		return false;
 	}
 
 	private IEnumerator CallActions() {
@@ -51,8 +42,9 @@ public class CommandHandler : MonoBehaviour {
 
 			float longestAnimation = 0f;
 			foreach (Command c in commandBlock) {
-				c.Execute();
-				longestAnimation = (longestAnimation > c.Length ? longestAnimation : c.Length);
+				 if (c.Execute()) {
+					 longestAnimation = (longestAnimation > c.Length ? longestAnimation : c.Length);
+				 }
 			}
 
 			yield return new WaitForSeconds(longestAnimation);
@@ -60,6 +52,14 @@ public class CommandHandler : MonoBehaviour {
 
 		StopCoroutine(callActions);
 		callActions = null;
+	}
+
+	public bool DoneAnimating() {
+		return callActions == null;
+	}
+
+	public void EnqueueCommand(Command c) {
+		commands.Enqueue(c);
 	}
 
 	private List<Command> GetCommandBlock() {
@@ -70,11 +70,11 @@ public class CommandHandler : MonoBehaviour {
 			return commandBlock;
 		}
 
-		List<GameObject> alreadyMoved = new List<GameObject>();
+		List<CreatureCombatData> alreadyMoved = new List<CreatureCombatData>();
 		while (commands.Count > 0
 				&& commands.Peek().GetType() == typeof(MoveCommand)
-				&& !alreadyMoved.Contains(commands.Peek().Mover)) {
-			alreadyMoved.Add(commands.Peek().Mover);
+				&& !alreadyMoved.Contains(commands.Peek().Source)) {
+			alreadyMoved.Add(commands.Peek().Source);
 			commandBlock.Add(commands.Dequeue());
 		}
 

@@ -1,11 +1,15 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameStateManager : MonoBehaviour {
 
 	public static GameStateManager Instance {get; private set;}
+	public bool animating = false;
+
 	public GameState current;
+	public Stack<GameState> stateStack = new Stack<GameState>();
+
 
 	void Awake() {
 		//Enforce singleton.
@@ -15,36 +19,34 @@ public class GameStateManager : MonoBehaviour {
 			DestroyImmediate(this);
 		}
 
-		current = GameState.Waiting;
+		//current = GameState.Waiting;
 	}
 
-	private void Update() {
-		switch (current) {
-			case GameState.Waiting:
-
-				break;
-			case GameState.Animating:
-
-				break;
-			case GameState.InMenu:
-				break;
-			default:
-				break;
-		}
-
-
-
-		if (GUIManager.visibleWindows.Count > 0) {
-			current = GameState.InMenu;
-		} else if (GUIManager.visibleWindows.Count <= 0) {
-			current = GameState.Waiting;
-		}
-
+	private void AddState(GameState state) {
+		stateStack.Peek().Disable();
+		stateStack.Push(state);
+		stateStack.Peek().Enable();
 	}
-}
 
-public enum GameState {
-	Waiting,
-	Animating,
-	InMenu
+	private GameState CreateState(string newState) {
+		if (newState.ToLower() == "exploration") {
+			return new ExplorationState();
+		} else {
+			Debug.Log("CreateState failed: invalid state name!");
+			return null;
+		}
+	}
+
+	public static void CallActions() {
+		IEnumerator go = CallActionsIEnumerator();
+		Instance.StartCoroutine(go);
+	}
+
+	private static IEnumerator CallActionsIEnumerator() {
+		if (CommandHandler.Instance.Execute()) {
+			PlayerInputManager.acceptingInput = false;
+			yield return new WaitUntil(() => CommandHandler.Instance.DoneAnimating() == true);
+			PlayerInputManager.acceptingInput = true;
+		}
+	}
 }

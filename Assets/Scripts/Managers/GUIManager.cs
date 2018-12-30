@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GUIManager : MonoBehaviour {
 
-	public static GUIManager Instance {get; private set;} //Enforce singleton
+	public static GUIManager Instance { get; private set; } //Enforce singleton
 
 	public List<GameObject> guiElements = new List<GameObject>();
 	public static Stack<GameObject> visibleWindows = new Stack<GameObject>();
@@ -38,8 +38,6 @@ public class GUIManager : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Escape)) {
 			if (visibleWindows.Count > 0) {
 				CloseWindow();
-			} else if (GameStateManager.Instance.current != GameState.Animating) {
-				ShowWindow("Pause");
 			}
 		}
 
