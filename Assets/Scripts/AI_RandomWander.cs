@@ -16,15 +16,20 @@ public class AI_RandomWander : MonoBehaviour {
 		}
 	}
 
-	public void NextStep() {
-
+	public Command NextStep() {
+		Vector2Int direction = NextStepDirection();
+		if (direction == Vector2.zero) {
+			return Command.New("pause", data);
+		} else {
+			return Command.New("move", data, direction);
+		}
 	}
 
-	public Vector2 NextStepDirection() {
+	public Vector2Int NextStepDirection() {
 		for (int i = 0; i < maxStepCheck; i++) {
 			//Apply random value to location for attempted move
-			Vector2 move = RandomDirection.Step();
-			Vector2 locationCheck = transform.position + (Vector3)move;
+			Vector2Int move = RandomDirection.Step();
+			Vector2Int locationCheck = data.mapLocation + move;
 
 			//Check move is ok; if so, return valid move
 			if (locationCheck.x > topLeftBound.x && locationCheck.x < bottomRightBound.x
@@ -34,6 +39,6 @@ public class AI_RandomWander : MonoBehaviour {
 		}
 
 		//Loop did not work; return zero
-		return Vector2.zero;
+		return Vector2Int.zero;
 	}
 }

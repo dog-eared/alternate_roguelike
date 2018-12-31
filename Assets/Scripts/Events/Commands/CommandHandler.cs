@@ -23,16 +23,16 @@ public class CommandHandler : MonoBehaviour {
 		}
 	}
 
-	public bool Execute() {
-		if (commands.Count > 0 && callActions == null) {
-			callActions = CallActions();
-			StartCoroutine(callActions);
+	public static bool Execute() {
+		if (commands.Count > 0 && Instance.callActions == null) {
+			Instance.callActions = Instance.CallActions();
+			Instance.StartCoroutine(Instance.callActions);
 			return true;
 		}
 
 		Debug.Log("CommandHandler was unable to execute: "
 					+ commands.Count + " commands and callActions exists = "
-					+ (callActions == null));
+					+ (Instance.callActions == null));
 		return false;
 	}
 
@@ -49,6 +49,7 @@ public class CommandHandler : MonoBehaviour {
 
 			yield return new WaitForSeconds(longestAnimation);
 		}
+
 
 		StopCoroutine(callActions);
 		callActions = null;

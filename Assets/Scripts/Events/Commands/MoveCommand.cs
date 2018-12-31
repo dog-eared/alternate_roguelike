@@ -16,11 +16,16 @@ public class MoveCommand : Command {
         }
     }
 
-    public MoveCommand(CreatureCombatData source, Vector2Int direction, float length = 0.2f, string animType = "None") {
+    public MoveCommand(CreatureCombatData source, Vector2Int direction, float length = -1f, string animType = "walk") {
         Source = source;
         Direction = direction;
-        Length = length;
         AnimationType = animType;
+
+        if (length < 0) {
+            Length = GameSettings.animSpeeds["walk"];
+        } else {
+            Length = length;
+        }
     }
 
 
@@ -33,6 +38,7 @@ public class MoveCommand : Command {
             Source.UpdateLocation(target);
             return true;
         } else {
+            Source.transform.eulerAngles = LookDirection.Look(Direction, Source.transform.eulerAngles);
             Debug.Log("Collision!");
             return false;
         }
