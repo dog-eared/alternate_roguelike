@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class CreatureCombatData : MonoBehaviour {
 
-	public Vector2Int mapLocation;
+	public Vector2Int MapLocation {get; private set;}
 
 	public int energy = 100;
 	public int maxEnergy = 125;
 	public int energyRecharge = 50;
 
 	public AI_RandomWander AI {get; private set;}
+	public CreatureAnimationHandler AnimHandler {get; private set;}
 
 	public bool Active {
 		get {
@@ -23,6 +24,13 @@ public class CreatureCombatData : MonoBehaviour {
 
 	private void Awake() {
 		CreatureManager.AddCreature(this);
+		MapLocation = new Vector2Int((int)transform.position.x, (int)transform.position.y);
+
+		try {
+			AnimHandler = GetComponent<CreatureAnimationHandler>();
+		} catch {
+			Debug.Log(this.gameObject.name + " has no AnimationHandler");
+		}
 
 		try {
 			AI = GetComponent<AI_RandomWander>();
@@ -32,7 +40,7 @@ public class CreatureCombatData : MonoBehaviour {
 	}
 
 	public void UpdateLocation(Vector3 location) {
-		mapLocation = new Vector2Int((int)location.x, (int)location.y);
+		MapLocation = new Vector2Int((int)location.x, (int)location.y);
 	}
 
 	public void Recharge() {

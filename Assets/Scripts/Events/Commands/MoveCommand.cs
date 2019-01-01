@@ -20,6 +20,7 @@ public class MoveCommand : Command {
         Source = source;
         Direction = direction;
         AnimationType = animType;
+        Groupable = true;
 
         if (length < 0) {
             Length = GameSettings.animSpeeds["walk"];
@@ -35,10 +36,11 @@ public class MoveCommand : Command {
         if (CommandHelper.CheckPassableAt(target)) {
             movement = SlideTo(target);
             CommandHandler.Instance.StartCoroutine(movement); //this is sloppy
+            Source.AnimHandler.SetAnimation(AnimationType, Length);
             Source.UpdateLocation(target);
             return true;
         } else {
-            Source.transform.eulerAngles = LookDirection.Look(Direction, Source.transform.eulerAngles);
+            Source.transform.eulerAngles = LookDirection.Look(Direction);
             Debug.Log("Collision!");
             return false;
         }
@@ -55,7 +57,7 @@ public class MoveCommand : Command {
     private IEnumerator SlideTo(Vector2 location) {
         float step = 0;
         Vector3 startPosition = Source.transform.position;
-        Source.transform.eulerAngles = LookDirection.Look(Direction, Source.transform.eulerAngles);
+        Source.transform.eulerAngles = LookDirection.Look(Direction);
 
         while (step < 1) {
             step +=  Time.deltaTime / Length;

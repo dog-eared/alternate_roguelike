@@ -5,11 +5,11 @@ using UnityEngine;
 public class GameStateManager : MonoBehaviour {
 
 	public static GameStateManager Instance {get; private set;}
-	public bool animating = false;
 
 	public GameState current;
 	public Stack<GameState> stateStack = new Stack<GameState>();
 
+	public float gameSpeed = 1.0f;
 
 	void Awake() {
 		//Enforce singleton.

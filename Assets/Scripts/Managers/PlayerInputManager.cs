@@ -6,11 +6,17 @@ public class PlayerInputManager : MonoBehaviour {
 
     public static PlayerInputManager Instance {get; private set;}
 
-    public CreatureCombatData playerCharacter;
+    public static CreatureCombatData Player {
+        get {
+            return Instance.playerCharacter;
+        }
+    }
+
+    public CreatureCombatData playerCharacter; //Public to allow debug-setting in editor
 
     public static bool acceptingInput = true;
 
-    public bool hasCommand = false;
+    public static bool hasCommand = false;
 
     private void Awake() {
 		//Enforce singleton.
@@ -32,9 +38,12 @@ public class PlayerInputManager : MonoBehaviour {
 
             if (Input.GetKeyDown("w")) {
                 Move(new Vector2Int(0, 1));
-
             } else if (Input.GetKeyDown("s")) {
                 Move(new Vector2Int(0, -1));
+            }
+
+            if (Input.GetKeyDown("space")) {
+                Pause();
             }
 
             if (hasCommand) {
@@ -50,9 +59,13 @@ public class PlayerInputManager : MonoBehaviour {
         if (moveCommand != null) {
             hasCommand = true;
             CommandHandler.Instance.EnqueueCommand(moveCommand);
-        } else {
-            hasCommand = false;
         }
+    }
+
+    private void Pause() {
+        Command pauseCommand = Command.New("pause", playerCharacter);
+        CommandHandler.Instance.EnqueueCommand(pauseCommand);
+        hasCommand = true;
     }
 
 }

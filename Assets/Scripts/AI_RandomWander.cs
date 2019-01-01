@@ -29,7 +29,7 @@ public class AI_RandomWander : MonoBehaviour {
 		for (int i = 0; i < maxStepCheck; i++) {
 			//Apply random value to location for attempted move
 			Vector2Int move = RandomDirection.Step();
-			Vector2Int locationCheck = data.mapLocation + move;
+			Vector2Int locationCheck = data.MapLocation + move;
 
 			//Check move is ok; if so, return valid move
 			if (locationCheck.x > topLeftBound.x && locationCheck.x < bottomRightBound.x

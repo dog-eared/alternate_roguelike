@@ -10,6 +10,7 @@ public class PauseCommand : Command {
 		Source = source;
 		Length = 0.08f;
 		AnimationType = animType;
+		Groupable = true;
 	}
 
 	public override bool Execute() {

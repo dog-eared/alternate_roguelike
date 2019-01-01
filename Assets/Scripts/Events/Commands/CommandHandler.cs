@@ -73,7 +73,7 @@ public class CommandHandler : MonoBehaviour {
 
 		List<CreatureCombatData> alreadyMoved = new List<CreatureCombatData>();
 		while (commands.Count > 0
-				&& commands.Peek().GetType() == typeof(MoveCommand)
+				&& commands.Peek().Groupable == true
 				&& !alreadyMoved.Contains(commands.Peek().Source)) {
 			alreadyMoved.Add(commands.Peek().Source);
 			commandBlock.Add(commands.Dequeue());

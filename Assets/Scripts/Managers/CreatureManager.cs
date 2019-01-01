@@ -9,7 +9,7 @@ public class CreatureManager : MonoBehaviour {
 	public List<CreatureCombatData> creatures = new List<CreatureCombatData>();
 	private static Queue<CreatureCombatData> actingThisTurn;
 
-	private IEnumerator currentTurn;
+	private static IEnumerator currentTurn;
 
 	private void Awake() {
 		//Enforce singleton.
@@ -30,8 +30,10 @@ public class CreatureManager : MonoBehaviour {
 
 	public static void NewRound() {
 		SortCreatureList();
+		RechargeCreatures();
 		actingThisTurn = GetActingThisTurn();
-		QueueCommands();
+		currentTurn = QueueCommands();
+		Instance.StartCoroutine(currentTurn);
 	}
 
 	/* PRIVATE METHODS */
@@ -45,14 +47,24 @@ public class CreatureManager : MonoBehaviour {
 		return actingQueue;
 	}
 
-	private static void QueueCommands() {
+	private static IEnumerator QueueCommands() {
 		while (actingThisTurn.Count > 0) {
 			if (actingThisTurn.Peek().AI != null) {
 				Command c = actingThisTurn.Dequeue().AI.NextStep();
 				CommandHandler.Instance.EnqueueCommand(c);
+			} else if (actingThisTurn.Peek() == PlayerInputManager.Player){
+				if (PlayerInputManager.hasCommand == false) {
+					yield return null;
+				}
 			} else {
 				actingThisTurn.Dequeue();
 			}
+		}
+	}
+
+	private static void RechargeCreatures() {
+		foreach (CreatureCombatData c in Instance.creatures) {
+			c.Recharge();
 		}
 	}
 
