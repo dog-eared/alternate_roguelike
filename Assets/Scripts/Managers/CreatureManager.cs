@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CreatureManager : MonoBehaviour {
+	/**
+	 * CREATURE MANAGER
+	 * Purpose: Holds a list of creatures, determines who's acting in each turn and when.
+	 *
+	 * TODO: Will handle separating creatures in combat and those not in combat
+	 * TODO: May also handle win conditions for combat-- refactor into CombatManager?? 
+	 */
 
 	public static CreatureManager Instance {get; private set;}
 

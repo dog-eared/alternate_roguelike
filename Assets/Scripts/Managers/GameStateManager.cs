@@ -45,7 +45,7 @@ public class GameStateManager : MonoBehaviour {
 	private static IEnumerator CallActionsIEnumerator() {
 		if (CommandHandler.Execute()) {
 			PlayerInputManager.acceptingInput = false;
-			yield return new WaitUntil(() => CommandHandler.Instance.DoneAnimating() == true);
+			yield return new WaitUntil(() => CommandHandler.Instance.DoneAnimating == true);
 
 			CreatureManager.NewRound();
 			PlayerInputManager.acceptingInput = true;

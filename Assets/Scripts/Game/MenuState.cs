@@ -7,6 +7,7 @@ public class MenuState : GameState {
 
 	public MenuState() {
 		Transitions = "";
+		TimeScale = 0.0f;
 	}
 
 	public override void Enable() {

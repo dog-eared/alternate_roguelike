@@ -1,20 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; //remove later
 
 public class CommandHandler : MonoBehaviour {
+	/**
+	 * COMMAND HANDLER
+	 * Purpose: Call commands sequentially and animate them (grouped together if
+	 * appropriate);
+	 */
 
 	public static CommandHandler Instance {get; private set;}
-
-	public CreatureCombatData mover;
-	public CreatureCombatData mover2;
-	public Text debugOutput;
 
 	private static Queue<Command> commands = new Queue<Command>();
 	private IEnumerator callActions;
 
-	void Awake() {
+	public bool DoneAnimating {
+		get {
+			return callActions == null;
+		}
+	}
+
+	private void Awake() {
 		if (Instance == null) {
 			Instance = this;
 		} else {
@@ -22,6 +28,9 @@ public class CommandHandler : MonoBehaviour {
 			Destroy(this);
 		}
 	}
+
+
+	/* PUBLIC METHODS */
 
 	public static bool Execute() {
 		if (commands.Count > 0 && Instance.callActions == null) {
@@ -35,6 +44,14 @@ public class CommandHandler : MonoBehaviour {
 					+ (Instance.callActions == null));
 		return false;
 	}
+
+	public void EnqueueCommand(Command c) {
+		//Adds a new command to the queue.
+		commands.Enqueue(c);
+	}
+
+
+	/* PRIVATE METHODS */
 
 	private IEnumerator CallActions() {
 		while (commands.Count > 0) {
@@ -55,15 +72,8 @@ public class CommandHandler : MonoBehaviour {
 		callActions = null;
 	}
 
-	public bool DoneAnimating() {
-		return callActions == null;
-	}
-
-	public void EnqueueCommand(Command c) {
-		commands.Enqueue(c);
-	}
-
 	private List<Command> GetCommandBlock() {
+		//Gets a group of commands
 
 		List<Command> commandBlock = new List<Command>();
 		if (commands.Peek().GetType() != typeof(MoveCommand)) {

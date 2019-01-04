@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class CommandHelper : MonoBehaviour {
+	/**
+	 * COMMAND HELPER
+	 * Purpose: Extra command related methods that don't fit anywhere else.
+	 */
 
 	private const int worldMask = 256;
 	private const int creatureMask = 512;

@@ -2,10 +2,10 @@ using UnityEngine;
 using System.Collections;
 
 public class MoveCommand : Command {
-
-    public override float Length {get;}
-    public override CreatureCombatData Source {get;}
-    public override string AnimationType {get;}
+    /**
+	 * MOVE COMMAND
+	 * Purpose: Action to move to another square.
+	 */
 
     private Vector2Int Direction {get;}
     private IEnumerator movement;
@@ -29,6 +29,8 @@ public class MoveCommand : Command {
         }
     }
 
+
+    /* PUBLIC METHODS */
 
     public override bool Execute() {
         Vector3 target = Source.gameObject.transform.position + new Vector3(Direction.x, Direction.y, 0);
@@ -54,6 +56,13 @@ public class MoveCommand : Command {
         }
     }
 
+    public override string ToString() {
+        return Source.gameObject.name + " : " + Direction;
+    }
+
+
+    /* PRIVATE METHODS */
+
     private IEnumerator SlideTo(Vector2 location) {
         float step = 0;
         Vector3 startPosition = Source.transform.position;
@@ -68,8 +77,6 @@ public class MoveCommand : Command {
         Cleanup();
     }
 
-    public override string ToString() {
-        return Source.gameObject.name + " : " + Direction;
-    }
+
 
 }

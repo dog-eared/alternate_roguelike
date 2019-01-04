@@ -6,6 +6,7 @@ public class ExplorationState : GameState {
 
 	public ExplorationState() {
 		Transitions = "TargetingState MenuState DialogState";
+		TimeScale = 1.0f;
 	}
 
 	public override void Enable() {

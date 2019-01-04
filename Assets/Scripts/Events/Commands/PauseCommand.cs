@@ -1,10 +1,11 @@
 using UnityEngine;
 
 public class PauseCommand : Command {
-
-	public override float Length {get;}
-	public override CreatureCombatData Source {get;}
-	public override string AnimationType {get;}
+	/**
+	 * PAUSE COMMAND
+	 * Purpose: Issued when creature is unable to act but isn't otherwise impeded, or
+	 * when the player chooses to do nothing.
+	 */
 
 	public PauseCommand(CreatureCombatData source, string animType = "None") {
 		Source = source;

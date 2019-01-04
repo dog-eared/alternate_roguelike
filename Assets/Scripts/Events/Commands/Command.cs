@@ -1,15 +1,19 @@
 using UnityEngine;
 
 public abstract class Command {
+	/**
+	 * COMMAND (abstract, non-monobehaviour)
+	 * Purpose: Base for issued commands. Contains relevant properties and enforces implementation of Execute() and
+	 * Cleanup(). Also contains methods to constrain creation of new Commands
+	 */
 
-	public virtual CreatureCombatData Source {get;}
-	public virtual float Length {get;}
-	public virtual string AnimationType {get;}
+	public virtual CreatureCombatData Source {get; protected set;}
+	public virtual float Length {get; protected set;}
+	public virtual string AnimationType {get; protected set;}
 	public virtual bool Groupable {get; protected set;}
 
 	public abstract bool Execute();
 	public abstract void Cleanup();
-
 
 
 	/* NEW COMMAND METHODS: */

@@ -2,9 +2,8 @@ using UnityEngine;
 
 public static class RandomDirection {
 
-	/*	RANDOM DIRECTION
-	*	Utility class to get random directions in various contexts.
-	*
+	/*	RANDOM DIRECTION (Helper class)
+	*	Helper class to get random directions in various contexts.
 	*/
 
 	public static Vector2Int Step(bool includePause = false) {

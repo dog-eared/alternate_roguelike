@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GUIManager : MonoBehaviour {
+	/**
+	 * GUI MANAGER
+	 *
+	 * Handles GUI elements as a stack.
+	 */
 
 	public static GUIManager Instance { get; private set; } //Enforce singleton
 
 	public List<GameObject> guiElements = new List<GameObject>();
 	public static Stack<GameObject> visibleWindows = new Stack<GameObject>();
 
+	//Placeholder
 	public static Dictionary<string, int> options = new Dictionary<string, int>() {
 		{"sfxVolume", 		9},
 		{"musicVolume", 	9},
@@ -34,6 +40,7 @@ public class GUIManager : MonoBehaviour {
 		}
 	}
 
+	//Placeholder
 	private void Update() {
 		if (Input.GetKeyDown(KeyCode.Escape)) {
 			if (visibleWindows.Count > 0) {

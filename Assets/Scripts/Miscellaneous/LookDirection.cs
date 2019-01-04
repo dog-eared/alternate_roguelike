@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class LookDirection {
 
+	/* LOOKDIRECTION (Helper class)
+	 * 
+	 * Used to get proper angle for 3D models
+	 */
+
 	private const float t = 45; //Tilt
 	private const float ht = 22.5f; //Half Tilt
 

@@ -1,8 +1,12 @@
-﻿using System.Collections;
+//﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public static class GameSettings {
+	/**
+	 * GAME SETTINGS (static, non-MonoBehaviour)
+	 * Purpose: Holds costs of combat actions and animation times
+	 * TODO This will probably hold other stuff later.
+	 */
 
 	public static Dictionary<string, int> actionCosts = new Dictionary<string, int>() {
 		{"move", 50},
