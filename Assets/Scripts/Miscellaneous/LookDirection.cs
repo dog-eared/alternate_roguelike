@@ -5,12 +5,12 @@ using UnityEngine;
 public class LookDirection {
 
 	/* LOOKDIRECTION (Helper class)
-	 * 
+	 *
 	 * Used to get proper angle for 3D models
 	 */
 
 	private const float t = 45; //Tilt
-	private const float ht = 22.5f; //Half Tilt
+	private const float ht = 30f; //Half Tilt
 
 	public static Vector3 Look(Vector2Int direction) {
 		switch (direction.x) {
@@ -37,7 +37,7 @@ public class LookDirection {
 					case (-1):
 						return new Vector3(ht, 135, -ht);
 					case (0):
-						return new Vector3(0, 90, -ht);
+						return new Vector3(0, 90, -t);
 					default:
 						return new Vector3(-ht, 45, -ht);
 				}

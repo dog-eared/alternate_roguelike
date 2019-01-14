@@ -43,3 +43,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: World - Collisions
+    uniqueID: 4052641071
+    locked: 0
+  - name: World - Visuals 1
+    uniqueID: 1193397519
+    locked: 0
+  - name: World - Visuals 2
+    uniqueID: 2102425125
+    locked: 0
+  - name: Creatures
+    uniqueID: 2907558451
+    locked: 0
+  - name: World - Visuals 3
+    uniqueID: 1553221021
+    locked: 0

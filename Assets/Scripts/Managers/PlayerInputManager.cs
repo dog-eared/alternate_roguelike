@@ -21,8 +21,9 @@ public class PlayerInputManager : MonoBehaviour {
     public CreatureCombatData playerCharacter; //Public to allow debug-setting in editor
 
     public static bool acceptingInput = true;
-
     public static bool hasCommand = false;
+
+    private Vector2Int movementDirection;
 
     private void Awake() {
 		//Enforce singleton.
@@ -34,7 +35,16 @@ public class PlayerInputManager : MonoBehaviour {
 	}
 
     private void Update() {
+
+        movementDirection = new Vector2Int((int)Input.GetAxisRaw("Horizontal"), (int)Input.GetAxisRaw("Vertical"));
+
         if (acceptingInput) {
+
+            if (movementDirection != Vector2.zero) {
+                Move(movementDirection);
+            }
+
+            /*
             if (Input.GetKeyDown("a")) {
                 Move(new Vector2Int(-1, 0));
             } else if (Input.GetKeyDown("d")) {
@@ -45,7 +55,7 @@ public class PlayerInputManager : MonoBehaviour {
                 Move(new Vector2Int(0, 1));
             } else if (Input.GetKeyDown("s")) {
                 Move(new Vector2Int(0, -1));
-            }
+            }*/
 
             if (Input.GetKeyDown("space")) {
                 Pause();
