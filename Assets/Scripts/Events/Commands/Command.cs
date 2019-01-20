@@ -31,6 +31,8 @@ public abstract class Command {
 		switch (cmdType) {
 			case "move":
 				return new MoveCommand(source, direction);
+			case "melee":
+				return new MeleeCommand(source, direction);
 			default:
 				return null;
 		}
@@ -44,4 +46,5 @@ public abstract class Command {
 				return null;
 		}
 	}
+
 }

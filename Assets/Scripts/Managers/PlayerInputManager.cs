@@ -57,8 +57,13 @@ public class PlayerInputManager : MonoBehaviour {
                 Move(new Vector2Int(0, -1));
             }*/
 
-            if (Input.GetKeyDown("space")) {
+            if (Input.GetKey("space")) {
                 Pause();
+            }
+
+            if (Input.GetKeyDown("j")) {
+                Melee(new Vector2Int(1, 0));
+                Debug.Log("Did a melee attack");
             }
 
             if (hasCommand) {
@@ -75,14 +80,20 @@ public class PlayerInputManager : MonoBehaviour {
         Command moveCommand = Command.New("move", playerCharacter, direction);
 
         if (moveCommand != null) {
-            hasCommand = true;
             CommandHandler.Instance.EnqueueCommand(moveCommand);
+            hasCommand = true;
         }
     }
 
     private void Pause() {
         Command pauseCommand = Command.New("pause", playerCharacter);
         CommandHandler.Instance.EnqueueCommand(pauseCommand);
+        hasCommand = true;
+    }
+
+    private void Melee(Vector2Int direction) {
+        Command meleeCommand = Command.New("melee", playerCharacter, direction);
+        CommandHandler.Instance.EnqueueCommand(meleeCommand);
         hasCommand = true;
     }
 

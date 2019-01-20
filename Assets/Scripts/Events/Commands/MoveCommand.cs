@@ -65,6 +65,7 @@ public class MoveCommand : Command {
 
     private IEnumerator SlideTo(Vector2 location) {
         float step = 0;
+        
         Vector3 startPosition = Source.transform.position;
         Source.transform.eulerAngles = LookDirection.Look(Direction);
 

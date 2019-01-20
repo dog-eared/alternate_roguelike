@@ -14,11 +14,14 @@ public class CreatureAnimationHandler : MonoBehaviour {
 
 
     private Animator animator;
+    public float animationLinger = 0.1f;
+    private bool hasRecentAction = false;
 
     /* String label, int will be used by the animator to set the animation */
     private static Dictionary<string, int> animations = new Dictionary<string, int>() {
         {"idle", 0},
-        {"walk", 1}
+        {"walk", 1},
+        {"melee", 2}
     };
 
     private void Awake() {
@@ -31,17 +34,23 @@ public class CreatureAnimationHandler : MonoBehaviour {
     /* PUBLIC METHODS */
 
     public void SetAnimation(string animName, float duration = 0.4f) {
-        animator.SetInteger("currentMove", animations[animName]);
-        Invoke("ResetAnimation", duration);
+        SetAnimation(animations[animName], duration);
     }
 
     public void SetAnimation(int animIndex, float duration = 0.4f) {
         animator.SetInteger("currentMove", animIndex);
-        Invoke("ResetAnimation", duration);
+
+        if (hasRecentAction) {
+            CancelInvoke();
+        }
+
+        hasRecentAction = true;
+        Invoke("ResetAnimation", duration + animationLinger);
     }
 
     public void ResetAnimation() {
         animator.SetInteger("currentMove", 0);
+        hasRecentAction = false;
     }
 
 }

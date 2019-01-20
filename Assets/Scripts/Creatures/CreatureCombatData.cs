@@ -10,6 +10,11 @@ public class CreatureCombatData : MonoBehaviour {
 
 	public Vector2Int MapLocation {get; private set;}
 
+	[Header("STATS (current | raw | actual)")]
+	public int health;
+	public int attackPower;
+
+	/* Energy */
 	public int energy = 100;
 	public int maxEnergy = 125;
 	public int energyRecharge = 50;
