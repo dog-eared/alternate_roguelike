@@ -2,21 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AI_RandomWander : MonoBehaviour {
+public class AI_RandomWander : AI_Base {
 
-	private CreatureCombatData data;
 	private int maxStepCheck = 3;
 
 	public Vector2Int topLeftBound;
 	public Vector2Int bottomRightBound;
 
-	void Awake() {
-		if (data == null) {
-			data = GetComponent<CreatureCombatData>();
-		}
-	}
-
-	public Command NextStep() {
+	public override Command NextStep() {
 		Vector2Int direction = NextStepDirection();
 		if (direction == Vector2.zero) {
 			return Command.New("pause", data);

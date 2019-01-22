@@ -34,7 +34,7 @@ public class MoveCommand : Command {
 
     public override bool Execute() {
         Vector3 target = Source.gameObject.transform.position + new Vector3(Direction.x, Direction.y, 0);
-
+        
         if (CommandHelper.CheckPassableAt(target)) {
             movement = SlideTo(target);
             CommandHandler.Instance.StartCoroutine(movement); //this is sloppy

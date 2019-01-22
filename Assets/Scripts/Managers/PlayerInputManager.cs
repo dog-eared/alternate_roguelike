@@ -40,30 +40,25 @@ public class PlayerInputManager : MonoBehaviour {
 
         if (acceptingInput) {
 
+            /* BASIC MOVEMENT */
             if (movementDirection != Vector2.zero) {
-                Move(movementDirection);
+                if (CommandHelper.CheckCreatureAt(Player.MapLocation + movementDirection)) {
+                    CreatureCombatData targetData = CommandHelper.GetCreatureAt(Player.MapLocation + movementDirection);
+                    Melee(targetData, movementDirection);
+                 } else {
+                    Move(movementDirection);
+                 }
             }
-
-            /*
-            if (Input.GetKeyDown("a")) {
-                Move(new Vector2Int(-1, 0));
-            } else if (Input.GetKeyDown("d")) {
-                Move(new Vector2Int(1, 0));
-            }
-
-            if (Input.GetKeyDown("w")) {
-                Move(new Vector2Int(0, 1));
-            } else if (Input.GetKeyDown("s")) {
-                Move(new Vector2Int(0, -1));
-            }*/
-
             if (Input.GetKey("space")) {
                 Pause();
             }
 
-            if (Input.GetKeyDown("j")) {
-                Melee(new Vector2Int(1, 0));
-                Debug.Log("Did a melee attack");
+            /* COMBAT */
+            
+
+            /* STATUS EFFECTS */
+            if (Player.energy <= 0) {
+                Pause();
             }
 
             if (hasCommand) {
@@ -82,7 +77,7 @@ public class PlayerInputManager : MonoBehaviour {
         if (moveCommand != null) {
             CommandHandler.Instance.EnqueueCommand(moveCommand);
             hasCommand = true;
-        }
+        } 
     }
 
     private void Pause() {
@@ -91,8 +86,8 @@ public class PlayerInputManager : MonoBehaviour {
         hasCommand = true;
     }
 
-    private void Melee(Vector2Int direction) {
-        Command meleeCommand = Command.New("melee", playerCharacter, direction);
+    private void Melee(CreatureCombatData target, Vector2Int direction) {
+        Command meleeCommand = Command.New("melee", playerCharacter, target, direction);
         CommandHandler.Instance.EnqueueCommand(meleeCommand);
         hasCommand = true;
     }

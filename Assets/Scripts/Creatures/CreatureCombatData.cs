@@ -19,7 +19,7 @@ public class CreatureCombatData : MonoBehaviour {
 	public int maxEnergy = 125;
 	public int energyRecharge = 50;
 
-	public AI_RandomWander AI {get; private set;}
+	public AI_Base AI {get; private set;}
 	public CreatureAnimationHandler AnimHandler {get; private set;}
 
 	public bool Active {
@@ -42,7 +42,7 @@ public class CreatureCombatData : MonoBehaviour {
 		}
 
 		try {
-			AI = GetComponent<AI_RandomWander>();
+			AI = GetComponent<AI_Base>();
 		} catch {
 			//This is a player
 		}

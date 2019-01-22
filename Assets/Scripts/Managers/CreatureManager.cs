@@ -47,7 +47,7 @@ public class CreatureManager : MonoBehaviour {
 	private static Queue<CreatureCombatData> GetActingThisTurn() {
 		Queue<CreatureCombatData> actingQueue = new Queue<CreatureCombatData>();
 		for (int i = 0; i < Instance.creatures.Count; i++) {
-			if (Instance.creatures[i].Active) {
+			if (Instance.creatures[i].Active == true) {
 				actingQueue.Enqueue(Instance.creatures[i]);
 			}
 		}

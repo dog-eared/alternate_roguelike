@@ -19,7 +19,7 @@ public static class GameSettings {
 
 	public static Dictionary<string, float> animSpeeds = new Dictionary<string, float>() {
 		{"walk", 0.2f},
-		{"melee", 0.7f},
+		{"melee", 0.5f},
 		{"shoot", 0.32f},
 		{"useItem", 0.45f}
 	};

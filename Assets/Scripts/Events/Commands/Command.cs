@@ -31,8 +31,6 @@ public abstract class Command {
 		switch (cmdType) {
 			case "move":
 				return new MoveCommand(source, direction);
-			case "melee":
-				return new MeleeCommand(source, direction);
 			default:
 				return null;
 		}
@@ -42,6 +40,15 @@ public abstract class Command {
 		switch (cmdType) {
 			case "pause":
 				return new PauseCommand(source);
+			default:
+				return null;
+		}
+	}
+
+	public static Command New(string cmdType, CreatureCombatData source, CreatureCombatData target, Vector2Int direction) {
+		switch (cmdType) {
+			case "melee":
+				return new MeleeCommand(source, target, direction);
 			default:
 				return null;
 		}

@@ -63,8 +63,9 @@ public class CommandHandler : MonoBehaviour {
 					 longestAnimation = (longestAnimation > c.Length ? longestAnimation : c.Length);
 				 }
 			}
-
+			Debug.Log("Yield start");
 			yield return new WaitForSeconds(longestAnimation);
+			Debug.Log("Yield End");
 		}
 
 
@@ -76,14 +77,15 @@ public class CommandHandler : MonoBehaviour {
 		//Gets a group of commands
 
 		List<Command> commandBlock = new List<Command>();
-		if (commands.Peek().GetType() != typeof(MoveCommand)) {
+
+		if (!commands.Peek().Groupable) {
 			commandBlock.Add(commands.Dequeue());
 			return commandBlock;
 		}
 
 		List<CreatureCombatData> alreadyMoved = new List<CreatureCombatData>();
 		while (commands.Count > 0
-				&& commands.Peek().Groupable == true
+				&& commands.Peek().Groupable
 				&& !alreadyMoved.Contains(commands.Peek().Source)) {
 			alreadyMoved.Add(commands.Peek().Source);
 			commandBlock.Add(commands.Dequeue());

@@ -5,11 +5,14 @@ using UnityEngine;
 public class MeleeCommand : Command {
 
 	private Vector2Int Direction {get;}
+    private CreatureCombatData Target {get;}
 
-	public MeleeCommand(CreatureCombatData source, Vector2Int direction, float length = -1f, string animType = "melee") {
+	public MeleeCommand(CreatureCombatData source, CreatureCombatData target, Vector2Int direction, float length = -1f, string animType = "melee") {
         Source = source;
+        Target = target;
         Direction = direction;
         AnimationType = animType;
+        Groupable = false;
 
         if (length < 0) {
             Length = GameSettings.animSpeeds["melee"];
@@ -20,11 +23,10 @@ public class MeleeCommand : Command {
 
 
 	public override bool Execute() {
-        Vector3 target = Source.gameObject.transform.position + new Vector3(Direction.x, Direction.y, 0);
+        //Vector3 target = Source.gameObject.transform.position + new Vector3(Direction.x, Direction.y, 0);
 		Source.transform.eulerAngles = LookDirection.Look(Direction);
 
 		Source.AnimHandler.SetAnimation(AnimationType, Length);
-		Debug.Log("Executed Melee attack");
 		return true;
 
         /*if (CommandHelper.CheckPassableAt(target)) {
