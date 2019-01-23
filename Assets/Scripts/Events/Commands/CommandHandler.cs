@@ -63,9 +63,9 @@ public class CommandHandler : MonoBehaviour {
 					 longestAnimation = (longestAnimation > c.Length ? longestAnimation : c.Length);
 				 }
 			}
-			Debug.Log("Yield start");
+			
 			yield return new WaitForSeconds(longestAnimation);
-			Debug.Log("Yield End");
+			
 		}
 
 

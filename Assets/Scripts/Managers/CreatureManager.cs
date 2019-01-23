@@ -75,6 +75,16 @@ public class CreatureManager : MonoBehaviour {
 		}
 	}
 
+	public static CreatureCombatData GetAtLocation(Vector2Int location) {
+		for (int i = 0; i < Instance.creatures.Count; i++) {
+			if (Instance.creatures[i].MapLocation == location) {
+				return Instance.creatures[i];
+			}
+		}
+
+		return null;
+	}
+
 
 	private static void SortCreatureList() {
 		Instance.SortByEnergy();

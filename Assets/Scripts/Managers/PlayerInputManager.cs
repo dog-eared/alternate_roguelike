@@ -42,12 +42,12 @@ public class PlayerInputManager : MonoBehaviour {
 
             /* BASIC MOVEMENT */
             if (movementDirection != Vector2.zero) {
-                if (CommandHelper.CheckCreatureAt(Player.MapLocation + movementDirection)) {
-                    CreatureCombatData targetData = CommandHelper.GetCreatureAt(Player.MapLocation + movementDirection);
-                    Melee(targetData, movementDirection);
-                 } else {
+                //if (CommandHelper.CheckCreatureAt(Player.MapLocation + movementDirection)) {
+                  //  CreatureCombatData targetData = CommandHelper.GetCreatureAt(Player.MapLocation + movementDirection);
+                    //Melee(targetData, movementDirection);
+                 //} else {
                     Move(movementDirection);
-                 }
+                 //}
             }
             if (Input.GetKey("space")) {
                 Pause();

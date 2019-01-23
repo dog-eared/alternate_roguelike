@@ -40,6 +40,7 @@ public class CommandHelper : MonoBehaviour {
 		try {
 			return Physics2D.OverlapBox(location, new Vector2(0.9f, 0.9f), 0, creatureMask).GetComponent<CreatureCombatData>();
 		} catch {
+			Debug.Log("null getCreatureAt");
 			return null;
 		}
 	}

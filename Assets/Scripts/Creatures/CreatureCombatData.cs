@@ -10,7 +10,11 @@ public class CreatureCombatData : MonoBehaviour {
 
 	public Vector2Int MapLocation {get; private set;}
 
-	[Header("STATS (current | raw | actual)")]
+	[Header("Information")]
+	public string displayName = "Creature";
+	public int factionID = 0; //Neutral
+
+	[Header("Stats (Numeric)")]
 	public int health;
 	public int attackPower;
 
@@ -56,6 +60,10 @@ public class CreatureCombatData : MonoBehaviour {
 		MapLocation = new Vector2Int((int)location.x, (int)location.y);
 	}
 
+	public void UpdateLocation(Vector2Int location) {
+		MapLocation = location;
+	}
+
 	public void Recharge() {
 		//Used to replenish energy up to the maximum amount. Should be called at end of each round.
 		//TODO: Extra check to see if creature is allowed to recharge (ie not sleeped/stunned/dead)
@@ -74,6 +82,11 @@ public class CreatureCombatData : MonoBehaviour {
 		} else {
 			return false;
 		}
+	}
+
+	public bool CheckEnemies(int faction) {
+		//This can be fleshed out later if we need more faction interaction -- 1 way alliances, summons, etc
+		return (factionID != faction);
 	}
 
 

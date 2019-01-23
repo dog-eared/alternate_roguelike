@@ -5,7 +5,7 @@ AnimatorController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Humanoid
+  m_Name: F_Humanoid
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: currentMove
@@ -168,7 +168,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400010, guid: 2c4bee52f81e34f40afc9609fddb52ea, type: 3}
+  m_Motion: {fileID: 7400010, guid: 097ffe8213565431986c189d34a54f79, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -195,7 +195,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400006, guid: 2c4bee52f81e34f40afc9609fddb52ea, type: 3}
+  m_Motion: {fileID: 7400002, guid: 097ffe8213565431986c189d34a54f79, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -220,7 +220,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400014, guid: 2c4bee52f81e34f40afc9609fddb52ea, type: 3}
+  m_Motion: {fileID: 7400018, guid: 097ffe8213565431986c189d34a54f79, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

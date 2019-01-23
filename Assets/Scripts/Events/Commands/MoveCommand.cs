@@ -5,6 +5,8 @@ public class MoveCommand : Command {
     /**
 	 * MOVE COMMAND
 	 * Purpose: Action to move to another square.
+     * 
+     * 
 	 */
 
     private Vector2Int Direction {get;}
@@ -33,7 +35,7 @@ public class MoveCommand : Command {
     /* PUBLIC METHODS */
 
     public override bool Execute() {
-        Vector3 target = Source.gameObject.transform.position + new Vector3(Direction.x, Direction.y, 0);
+        Vector2Int target = Source.MapLocation + Direction;
         
         if (CommandHelper.CheckPassableAt(target)) {
             movement = SlideTo(target);
@@ -41,11 +43,24 @@ public class MoveCommand : Command {
             Source.AnimHandler.SetAnimation(AnimationType, Length);
             Source.UpdateLocation(target);
             return true;
-        } else {
-            Source.transform.eulerAngles = LookDirection.Look(Direction);
-            Debug.Log("Collision!");
-            return false;
+        } else if (CommandHelper.CheckCreatureAt(target)) {
+            Debug.Log("Target: " + target);
+            CreatureCombatData struck = CreatureManager.GetAtLocation(target);
+
+
+            if (struck != null && struck.CheckEnemies(Source.factionID)) {
+                Command.New("melee", Source, struck, Direction).Execute(); //Attempt to attack
+                Debug.Log(Source.displayName + " attacks " + struck.displayName);
+                //Settings to have same timing/animation as a regular attack
+                Length = GameSettings.animSpeeds["melee"];
+                Groupable = false;
+                return false;
+            }
         }
+
+        Source.transform.eulerAngles = LookDirection.Look(Direction);
+        Debug.Log("Collision!");
+        return false;
 
     }
 
