@@ -2211,7 +2211,8 @@ Prefab:
       propertyPath: factionID
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114389808561770968, guid: fbefe6b46ae1b4729840c4aea724b41d, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: fbefe6b46ae1b4729840c4aea724b41d, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &477178805
@@ -4442,6 +4443,26 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4846404200473044, guid: bbf9f45058f40488e83073fce48c1ac8,
     type: 2}
   m_PrefabInternal: {fileID: 911384288}
+--- !u!1 &939505883 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1175648133230354, guid: fbefe6b46ae1b4729840c4aea724b41d,
+    type: 2}
+  m_PrefabInternal: {fileID: 446514440}
+--- !u!114 &939505884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 939505883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f6bed9e4000c4dfa8455b3b3ced8b8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  topLeftBound: {x: -10, y: 10}
+  bottomRightBound: {x: 10, y: -10}
+  playerInBounds: 0
 --- !u!1 &956112452
 GameObject:
   m_ObjectHideFlags: 0
