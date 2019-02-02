@@ -21,7 +21,8 @@ public class CreatureAnimationHandler : MonoBehaviour {
     private static Dictionary<string, int> animations = new Dictionary<string, int>() {
         {"idle", 0},
         {"walk", 1},
-        {"melee", 2}
+        {"melee", 2},
+        {"death", -10}
     };
 
     private void Awake() {
@@ -32,11 +33,6 @@ public class CreatureAnimationHandler : MonoBehaviour {
 
 
     /* PUBLIC METHODS */
-
-    public void SetAnimation(string animName, float duration = 0.4f) {
-        SetAnimation(animations[animName], duration);
-    }
-
     public void SetAnimation(int animIndex, float duration = 0.4f) {
         animator.SetInteger("currentMove", animIndex);
 
@@ -47,6 +43,19 @@ public class CreatureAnimationHandler : MonoBehaviour {
         hasRecentAction = true;
         Invoke("ResetAnimation", duration + animationLinger);
     }
+
+    public void SetAnimation(string animName, float duration = 0.4f) {
+        SetAnimation(animations[animName], duration);
+    }
+
+    public void SetState(int stateIndex) {
+        animator.SetInteger("currentMove", stateIndex);
+    }
+
+    public void SetState(string stateName) {
+        animator.SetInteger("currentMove", animations[stateName]);
+    }
+
 
     public void ResetAnimation() {
         animator.SetInteger("currentMove", 0);

@@ -6567,6 +6567,7 @@ MonoBehaviour:
   factionID: 2
   health: 10
   attackPower: 10
+  isDead: 0
   energy: 100
   maxEnergy: 100
   energyRecharge: 40

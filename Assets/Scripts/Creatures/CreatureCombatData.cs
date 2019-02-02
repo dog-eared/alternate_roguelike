@@ -17,6 +17,7 @@ public class CreatureCombatData : MonoBehaviour {
 	[Header("Stats (Numeric)")]
 	public int health;
 	public int attackPower;
+	public bool isDead = false;
 
 	/* Energy */
 	public int energy = 100;
@@ -29,7 +30,7 @@ public class CreatureCombatData : MonoBehaviour {
 	public bool Active {
 		get {
 			if (AI != null) {
-				return (energy >= 0);
+				return (energy >= 0 && !isDead);
 			}
 			return false;
 		}
@@ -52,6 +53,13 @@ public class CreatureCombatData : MonoBehaviour {
 		}
 	}
 
+	private void CheckDeath() {
+		if (health <= 0) {
+			AnimHandler.SetState("death");
+			isDead = true;
+		}
+	}
+
 
 	/* PUBLIC METHODS */
 
@@ -64,12 +72,22 @@ public class CreatureCombatData : MonoBehaviour {
 		MapLocation = location;
 	}
 
+	public int MeleeAttack() {
+		return attackPower;
+	}
+
+	public void Strike(int damage) {
+		health -= damage;
+		CheckDeath();
+	}
+
 	public void Recharge() {
 		//Used to replenish energy up to the maximum amount. Should be called at end of each round.
 		//TODO: Extra check to see if creature is allowed to recharge (ie not sleeped/stunned/dead)
 
-		//If allowed, recharge energy
-		energy = Mathf.Min(maxEnergy, energy + energyRecharge);
+		if (!isDead) {
+			energy = Mathf.Min(maxEnergy, energy + energyRecharge);
+		}
 	}
 
 	public bool Deplete(int amount) {

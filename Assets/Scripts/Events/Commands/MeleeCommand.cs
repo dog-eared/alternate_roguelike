@@ -29,6 +29,9 @@ public class MeleeCommand : Command {
 		Source.transform.eulerAngles = LookDirection.Look(Direction);
 
 		Source.AnimHandler.SetAnimation(AnimationType, Length);
+
+        Target.Strike(Source.MeleeAttack());
+
 		return true;
 
         /*if (CommandHelper.CheckPassableAt(target)) {
