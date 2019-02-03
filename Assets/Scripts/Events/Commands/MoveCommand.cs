@@ -44,7 +44,6 @@ public class MoveCommand : Command {
             Source.UpdateLocation(target);
             return true;
         } else if (CommandHelper.CheckCreatureAt(target)) {
-            Debug.Log("Target: " + target);
             CreatureCombatData struck = CreatureManager.GetAtLocation(target);
 
 
@@ -59,7 +58,6 @@ public class MoveCommand : Command {
         }
 
         Source.transform.eulerAngles = LookDirection.Look(Direction);
-        Debug.Log("Collision!");
         return false;
 
     }

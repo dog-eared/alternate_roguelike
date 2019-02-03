@@ -10,8 +10,8 @@ public class MenuState : GameState {
 		TimeScale = 0.0f;
 	}
 
-	public override void Enable() {
-		//Set timescale to 0
+	public override void Enable() {		
+        Time.timeScale = TimeScale;	
 	}
 
 	public override void Disable() {

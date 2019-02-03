@@ -10,7 +10,7 @@ public class ExplorationState : GameState {
 	}
 
 	public override void Enable() {
-		//Show Exploration related GUI
+		Time.timeScale = TimeScale;
 	}
 
 	public override void Disable() {

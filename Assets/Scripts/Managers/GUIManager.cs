@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GUIManager : MonoBehaviour {
 	/**
@@ -13,6 +14,8 @@ public class GUIManager : MonoBehaviour {
 
 	public List<GameObject> guiElements = new List<GameObject>();
 	public static Stack<GameObject> visibleWindows = new Stack<GameObject>();
+
+	public static UnityEvent MenuChanged = new UnityEvent();
 
 	//Placeholder
 	public static Dictionary<string, int> options = new Dictionary<string, int>() {
@@ -70,6 +73,8 @@ public class GUIManager : MonoBehaviour {
 
 		visibleWindows.Push(guiElements[windowIndex]);
 		visibleWindows.Peek().SetActive(true);
+		
+		MenuChanged.Invoke();
 	}
 
 	public void ShowWindow(string windowName) {
@@ -98,6 +103,8 @@ public class GUIManager : MonoBehaviour {
 		if (visibleWindows.Count > 0) {
 			visibleWindows.Peek().SetActive(true);
 		}
+
+		MenuChanged.Invoke();
 	}
 
 }

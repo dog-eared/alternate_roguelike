@@ -36,6 +36,7 @@ public class CreatureCombatData : MonoBehaviour {
 		}
 	}
 
+
 	private void Awake() {
 		CreatureManager.AddCreature(this);
 		MapLocation = new Vector2Int((int)transform.position.x, (int)transform.position.y);

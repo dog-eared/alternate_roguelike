@@ -8,8 +8,6 @@ public class MeleeCommand : Command {
     private CreatureCombatData Target {get;}
 
 	public MeleeCommand(CreatureCombatData source, CreatureCombatData target, Vector2Int direction, float length = -1f, string animType = "melee") {
-        Debug.Log("Created Melee Command");
-
         Source = source;
         Target = target;
         Direction = direction;

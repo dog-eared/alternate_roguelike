@@ -10,5 +10,4 @@ public abstract class GameState {
 
 	public abstract void Enable();
 	public abstract void Disable();
-
 }

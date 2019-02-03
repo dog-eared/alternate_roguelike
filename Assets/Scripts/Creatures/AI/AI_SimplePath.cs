@@ -13,6 +13,13 @@ public class AI_SimplePath : AI_Base {
 	public Vector2Int[] steps;
 
 	public override Command NextStep() {
+
+		if (data == null) {
+			//If the GetComponent in Awake() hasn't fired for some reason, this should buy some time.
+			return Command.New("pause", GetComponent<CreatureCombatData>());
+		}
+
+
 		if (steps.Length == 0) {
 			return Command.New("pause", data);
 		}

@@ -7,7 +7,7 @@ public class GameStateManager : MonoBehaviour {
 	public static GameStateManager Instance {get; private set;}
 
 	public GameState current;
-	public Stack<GameState> stateStack = new Stack<GameState>();
+	public static Stack<GameState> stateStack = new Stack<GameState>();
 
 	public float gameSpeed = 1.0f;
 
@@ -18,25 +18,53 @@ public class GameStateManager : MonoBehaviour {
 		} else {
 			DestroyImmediate(this);
 		}
+		GUIManager.MenuChanged.AddListener(CheckGUIState);
+		
+		//CreatureManager.Instance.Invoke("NewRound", 0.05f);
 
-		CreatureManager.NewRound();
+		AddState(CreateState("exploration"));
 	}
 
 	private void AddState(GameState state) {
-		stateStack.Peek().Disable();
+
+		if (stateStack.Count > 0) {
+			stateStack.Peek().Disable();
+		}
+	
 		stateStack.Push(state);
 		stateStack.Peek().Enable();
 	}
 
-	private GameState CreateState(string newState) {
-		if (newState.ToLower() == "exploration") {
-			return new ExplorationState();
-		} else {
-			Debug.Log("CreateState failed: invalid state name!");
-			return null;
+	private void RemoveState() {
+		if (stateStack.Count > 1) {
+			stateStack.Pop().Disable();
+			stateStack.Peek().Enable();
 		}
 	}
 
+	private void CheckGUIState() {
+		if (stateStack.Peek().GetType() == typeof(MenuState) && GUIManager.visibleWindows.Count == 0) {
+			RemoveState();
+		} else if (stateStack.Peek().GetType() != typeof(MenuState) && GUIManager.visibleWindows.Count > 0) {
+			AddState(CreateState("menu"));
+		}
+	}
+
+	private GameState CreateState(string newState) {
+		switch (newState.ToLower()) {
+			case "exploration":
+				return new ExplorationState();
+			case "menu":
+				return new MenuState();
+			case "combat":
+				return new CombatState();
+			default:
+				Debug.Log("CreateState failed: invalid state name!");
+				return null;
+		}
+	}
+
+	/* COMBAT */
 	public static void CallActions() {
 		IEnumerator go = CallActionsIEnumerator();
 		Instance.StartCoroutine(go);
